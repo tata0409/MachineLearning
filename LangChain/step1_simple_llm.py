@@ -5,9 +5,8 @@ from langchain_core.messages import HumanMessage
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
-
 if not api_key:
-    raise ValueError("No OPENAI_API_KEY in .env. Add it and run again!")
+    raise ValueError("No OPENAI_API_KEY in .env Add it and run again!")
 
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 
