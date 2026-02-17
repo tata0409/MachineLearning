@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.tools import tool
 
 load_dotenv()
@@ -21,3 +21,19 @@ def safe_calculate(expression: str) -> str:
         return result
     except Exception as e:
         return f"Error: {e}"
+
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+
+with open("data/faq.txt", "r", encoding="utf-8") as f:
+    faq_text = f.read()
+splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=20)
+docs = splitter.split_text(faq_text)
+
+embeddings = OpenAIEmbeddings()
+vectorstores = FAISS(
+    embedding_function=embeddings,
+    index=inddex,
+    docstore=inMemoryDocstore(),
+    index_to_docstore_id={}
+)
